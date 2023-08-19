@@ -10,5 +10,5 @@ playground
 .pytest_cache/*
 run_data/*
 !run_data/.gitkeep
-
+.coverage
 .idea
