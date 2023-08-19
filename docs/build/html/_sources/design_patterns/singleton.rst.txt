@@ -66,5 +66,5 @@ How it works
 API Reference
 ==============
 
-.. automodule:: myutils.design_patterns.singleton
+.. automodule:: core.design_patterns.singleton
    :members:

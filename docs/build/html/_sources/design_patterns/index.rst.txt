@@ -11,7 +11,7 @@ inherit from; enabling your own classes to have that specific capability.
 
 .. warning::
     Using a design pattern may have consequences that you must be aware of.
-    Please use codes in this section if you totally understand the behaviour
+    Please don't use codes in this section unless you totally understand the behaviour
     of the design pattern in question.
 
 .. toctree::
