@@ -1,7 +1,7 @@
 from abc import ABC
 
 class Singleton(ABC):
-    '''the singleton object'''
+    '''The singleton object'''
     
     _instance_dict = {}
     def __new__(cls, *args, **kwargs):
