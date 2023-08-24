@@ -48,7 +48,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">singleton</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#how-it-works">How it works</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-core.design_patterns.singleton">API Reference</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#core.design_patterns.singleton.SingletonObject"><code class="docutils literal notranslate"><span class="pre">SingletonObject</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#core.design_patterns.singleton.Singleton"><code class="docutils literal notranslate"><span class="pre">Singleton</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -92,16 +92,16 @@ The implementation we provide here, lets us have such functionality.</p>
 <section id="how-it-works">
 <h2>How it works<a class="headerlink" href="#how-it-works" title="Permalink to this heading"></a></h2>
 <ol class="arabic">
-<li><p>Import the SingletonObject class from the package</p>
+<li><p>Import the Singleton class from the package</p>
 <blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">myutils.design_patterns.singleton</span> <span class="kn">import</span> <span class="n">SingletonObject</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">myutils.design_patterns.singleton</span> <span class="kn">import</span> <span class="n">Singleton</span>
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p>Create your own singleton object, with whatever functionality you have in mind</p>
 <blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MySingletonObject</span><span class="p">(</span><span class="n">SingletonObject</span><span class="p">):</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MySingleton</span><span class="p">(</span><span class="n">Singleton</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">val</span>
@@ -111,11 +111,11 @@ The implementation we provide here, lets us have such functionality.</p>
 </li>
 <li><p>Instantiate the object twice and check if they are the same objects or not. as you can see they are actually the same objects.</p>
 <blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">first_instance</span> <span class="o">=</span> <span class="n">MySingletonObject</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">second_instance</span> <span class="o">=</span> <span class="n">MySingletonObject</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">first_instance</span> <span class="o">=</span> <span class="n">MySingleton</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">second_instance</span> <span class="o">=</span> <span class="n">MySingleton</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">first_instance</span><span class="p">)</span>  <span class="c1"># &lt;__main__.MySingletonObject object at 0x00000186297EA280&gt;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">second_instance</span><span class="p">)</span> <span class="c1"># &lt;__main__.MySingletonObject object at 0x00000186297EA280&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">first_instance</span><span class="p">)</span>  <span class="c1"># &lt;__main__.MySingleton object at 0x00000186297EA280&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">second_instance</span><span class="p">)</span> <span class="c1"># &lt;__main__.MySingleton object at 0x00000186297EA280&gt;</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">first_instance</span><span class="o">.</span><span class="n">val</span> <span class="o">==</span> <span class="n">second_instance</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="c1"># True</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">first_instance</span><span class="o">.</span><span class="n">val</span> <span class="o">==</span> <span class="mi">100</span><span class="p">)</span> <span class="c1"># True, Initially was 10, but changed to 100 in second instantitation</span>
 </pre></div>
@@ -131,16 +131,16 @@ instantiation altered this value on the object.</p>
 </li>
 <li><p>Create another singleton object, this newly created object can have singleton feature for its own independently from the first one we created.</p>
 <blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyAnotherSingletonObject</span><span class="p">(</span><span class="n">SingletonObject</span><span class="p">):</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyAnotherSingleton</span><span class="p">(</span><span class="n">Singleton</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">val</span>
 
-<span class="n">third_instance_from_new_object</span> <span class="o">=</span> <span class="n">MyAnotherSingletonObject</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">third_instance_from_new_object</span> <span class="o">=</span> <span class="n">MyAnotherSingleton</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">first_instance</span><span class="p">)</span>  <span class="c1"># &lt;__main__.MySingletonObject object at 0x00000186297EA280&gt;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">second_instance</span><span class="p">)</span> <span class="c1"># &lt;__main__.MySingletonObject object at 0x00000186297EA280&gt;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">third_instance_from_new_object</span><span class="p">)</span> <span class="c1"># &lt;__main__.MyAnotherSingletonObject object at 0x00000186297818E0&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">first_instance</span><span class="p">)</span>  <span class="c1"># &lt;__main__.MySingleton object at 0x00000186297EA280&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">second_instance</span><span class="p">)</span> <span class="c1"># &lt;__main__.MySingleton object at 0x00000186297EA280&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">third_instance_from_new_object</span><span class="p">)</span> <span class="c1"># &lt;__main__.MyAnotherSingleton object at 0x00000186297818E0&gt;</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">first_instance</span><span class="o">.</span><span class="n">val</span> <span class="o">==</span> <span class="n">third_instance_from_new_object</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="c1"># False</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">second_instance</span><span class="o">.</span><span class="n">val</span> <span class="o">==</span> <span class="n">third_instance_from_new_object</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="c1"># False</span>
 </pre></div>
@@ -152,8 +152,8 @@ instantiation altered this value on the object.</p>
 <section id="module-core.design_patterns.singleton">
 <span id="api-reference"></span><h2>API Reference<a class="headerlink" href="#module-core.design_patterns.singleton" title="Permalink to this heading"></a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="core.design_patterns.singleton.SingletonObject">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">core.design_patterns.singleton.</span></span><span class="sig-name descname"><span class="pre">SingletonObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#core.design_patterns.singleton.SingletonObject" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="core.design_patterns.singleton.Singleton">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">core.design_patterns.singleton.</span></span><span class="sig-name descname"><span class="pre">Singleton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#core.design_patterns.singleton.Singleton" title="Permalink to this definition"></a></dt>
 <dd><p>the singleton object</p>
 </dd></dl>
 

@@ -12,17 +12,17 @@ The implementation we provide here, lets us have such functionality.
 How it works
 ==============
 
-#. Import the SingletonObject class from the package
+#. Import the Singleton class from the package
  
     .. code-block:: python
     
-        from myutils.design_patterns.singleton import SingletonObject
+        from myutils.design_patterns.singleton import Singleton
         
 #. Create your own singleton object, with whatever functionality you have in mind
 
     .. code-block:: python
         
-        class MySingletonObject(SingletonObject):
+        class MySingleton(Singleton):
             
             def __init__(self,val):
                 self.val = val
@@ -31,11 +31,11 @@ How it works
 
     .. code-block:: python
     
-        first_instance = MySingletonObject(val=10)
-        second_instance = MySingletonObject(val=100)
+        first_instance = MySingleton(val=10)
+        second_instance = MySingleton(val=100)
 
-        print(first_instance)  # <__main__.MySingletonObject object at 0x00000186297EA280>
-        print(second_instance) # <__main__.MySingletonObject object at 0x00000186297EA280>
+        print(first_instance)  # <__main__.MySingleton object at 0x00000186297EA280>
+        print(second_instance) # <__main__.MySingleton object at 0x00000186297EA280>
         print(first_instance.val == second_instance.val) # True
         print(first_instance.val == 100) # True, Initially was 10, but changed to 100 in second instantitation
 
@@ -50,16 +50,16 @@ How it works
 
     .. code-block:: python
         
-        class MyAnotherSingletonObject(SingletonObject):
+        class MyAnotherSingleton(Singleton):
             
             def __init__(self,val):
                 self.val = val
         
-        third_instance_from_new_object = MyAnotherSingletonObject(val=200)
+        third_instance_from_new_object = MyAnotherSingleton(val=200)
 
-        print(first_instance)  # <__main__.MySingletonObject object at 0x00000186297EA280>
-        print(second_instance) # <__main__.MySingletonObject object at 0x00000186297EA280>
-        print(third_instance_from_new_object) # <__main__.MyAnotherSingletonObject object at 0x00000186297818E0>
+        print(first_instance)  # <__main__.MySingleton object at 0x00000186297EA280>
+        print(second_instance) # <__main__.MySingleton object at 0x00000186297EA280>
+        print(third_instance_from_new_object) # <__main__.MyAnotherSingleton object at 0x00000186297818E0>
         print(first_instance.val == third_instance_from_new_object.val) # False
         print(second_instance.val == third_instance_from_new_object.val) # False
 

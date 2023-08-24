@@ -1,6 +1,6 @@
 from abc import ABC
 
-class SingletonObject(ABC):
+class Singleton(ABC):
     '''the singleton object'''
     
     _instance_dict = {}

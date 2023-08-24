@@ -1,6 +1,6 @@
 import pytest
 
-from core.design_patterns.singleton import SingletonObject
+from core.design_patterns.singleton import Singleton
 
 from .conftest import (inputs_test_multiple_singleton_functionality,
                        inputs_test_singleton_attrs_can_change_during_duplicate_instantiation,
@@ -16,18 +16,18 @@ def test_singleton_basic_functionality(_class):
     Multiple instantiation of a singleton object MUST end with existance of only
     the first instance
     '''
-    class MySingletonObject(SingletonObject,_class):
+    class MySingleton(Singleton,_class):
         pass
     
     try :
-        instance1 = MySingletonObject(val1=1)
+        instance1 = MySingleton(val1=1)
     except TypeError:
-        instance1 = MySingletonObject()
+        instance1 = MySingleton()
     
     try :
-        instance2 = MySingletonObject(val1=2)
+        instance2 = MySingleton(val1=2)
     except TypeError:
-        instance2 = MySingletonObject()
+        instance2 = MySingleton()
     
     assert instance1 is instance2
 
@@ -36,21 +36,21 @@ def test_multiple_singleton_functionality(_class):
     '''
     Different Singleton objects MUST be independent of each other
     '''
-    class MySingletonObject(SingletonObject,_class):
+    class MySingleton(Singleton,_class):
         pass
     
-    class MyAnotherSingletonObject(SingletonObject,_class):
+    class MyAnotherSingleton(Singleton,_class):
         pass
     
     try :
-        instance1 = MySingletonObject(val1=1)
+        instance1 = MySingleton(val1=1)
     except TypeError:
-        instance1 = MySingletonObject()
+        instance1 = MySingleton()
     
     try :
-        instance2 = MyAnotherSingletonObject(val1=2)
+        instance2 = MyAnotherSingleton(val1=2)
     except TypeError:
-        instance2 = MyAnotherSingletonObject()
+        instance2 = MyAnotherSingleton()
     
     assert instance1 is not instance2
     
@@ -63,18 +63,18 @@ def test_singleton_attrs_can_change_during_duplicate_instantiation(_class):
     Another Instantiation of a singleton object that has attributes to initilize,
     impacts the very first attributes of the singleton object
     '''
-    class MySingletonObject(SingletonObject,_class):
+    class MySingleton(Singleton,_class):
         pass
     
     try :
-        instance1 = MySingletonObject(val1=1)
+        instance1 = MySingleton(val1=1)
     except TypeError:
-        instance1 = MySingletonObject()
+        instance1 = MySingleton()
     
     try :
-        instance2 = MySingletonObject(val1=2)
+        instance2 = MySingleton(val1=2)
     except TypeError:
-        instance2 = MySingletonObject()
+        instance2 = MySingleton()
     
     assert instance1 is instance2
     
