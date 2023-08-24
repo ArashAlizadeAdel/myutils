@@ -2,7 +2,7 @@ from abc import ABC,abstractmethod
 import copy
 
 class Prototype(ABC):
-    '''the prototype object'''
+    '''The prototype object'''
     
     def clone(self):
         '''The method that enables prototyping.'''
