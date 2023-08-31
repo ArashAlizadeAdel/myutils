@@ -18,3 +18,5 @@ inherit from; enabling your own classes to have that specific capability.
    :maxdepth: 1
    
    singleton
+   prototype
+   factory

@@ -16,7 +16,7 @@ How it works
  
     .. code-block:: python
     
-        from myutils.design_patterns.singleton import Singleton
+        from core.design_patterns.singleton import Singleton
         
 #. Create your own singleton object, with whatever functionality you have in mind
 

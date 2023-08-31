@@ -9,7 +9,7 @@ Myutils is a custom python package that contains utilities that enable
 a python programmer to develop better applications.
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    
    design_patterns/index
 
