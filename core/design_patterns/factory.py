@@ -1,13 +1,14 @@
 from abc import ABC
+from typing import Dict, Any
 
 class Factory(ABC):
     '''The factory object. This object implements a practical factory method'''
     
-    def __init__(self,objects : dict = dict()):
+    def __init__(self,objects : Dict[str, object] = dict()):
         
         self.objects = objects
     
-    def build_object(self,name : str,params : dict = dict()) -> object:
+    def build_object(self,name : str,params : Dict[str, Any] = dict()) -> object:
         '''Builds the requested object; If any paramter is required for instantiation
         they must be passed in.
         '''
@@ -22,12 +23,12 @@ class Factory(ABC):
     def add_object(self,name : str, obj : object,on_duplicate : str = "replace") -> None:
         '''Adds an object to objects while considering on_duplicate behaviour'''
         
-        if (on_duplicate == "error") and (name in self.objects) :
-            raise Exception(f"name requested already exists, name : {name}")
-        
-        self.objects[name] = obj
+        if (on_duplicate == "skip") and (name in self.objects) :
+            pass
+        else :
+            self.objects[name] = obj
 
-    def add_objects(self, objects : dict, on_duplicate : str = "replace") -> None:
+    def add_objects(self, objects : Dict[str, object], on_duplicate : str = "replace") -> None:
         '''Adds multiple objects to objects while considering on_duplicate behaviour'''
         
         for obj in objects:
@@ -36,7 +37,7 @@ class Factory(ABC):
     def delete_object(self,name : str) -> None:
         '''Deletes an object from objects'''
         
-        self.objects.pop(name)
+        self.objects.pop(name,None)
         
     def delete_objects(self, objects : list) -> None:
         '''Deletes Multipe objects from objects'''

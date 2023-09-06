@@ -20,7 +20,8 @@
         <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="prototype" href="prototype.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -42,8 +43,20 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="index.html">Design Patterns</a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Design Patterns</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="singleton.html">singleton</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prototype.html">prototype</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">factory</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#how-it-works">How it works</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-core.design_patterns.factory">API Reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#core.design_patterns.factory.Factory"><code class="docutils literal notranslate"><span class="pre">Factory</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -60,6 +73,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Design Patterns</a></li>
       <li class="breadcrumb-item active">factory</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/design_patterns/factory.rst.txt" rel="nofollow"> View page source</a>
@@ -72,12 +86,117 @@
              
   <section id="factory">
 <h1>factory<a class="headerlink" href="#factory" title="Permalink to this heading"></a></h1>
+<p>Factory is a design pattern that helps us seperate instantiation of an object
+from its usage. Defining such interface has following benefits :</p>
+<ul class="simple">
+<li><p>we can extend our code more easily, simply adding new objects to the factory</p></li>
+<li><p>we can switch the object responsible for instantiation in runtime</p></li>
+<li><p>we can develop more dynamic programs</p></li>
+</ul>
+<p>There are two variations of the factory pattern. <strong>Factory Method</strong> and <strong>Abstract Factory Pattern</strong>.
+The implementation we provide here is inspired by <strong>Factory Method</strong>.</p>
+<section id="how-it-works">
+<h2>How it works<a class="headerlink" href="#how-it-works" title="Permalink to this heading"></a></h2>
+<ol class="arabic">
+<li><p>Import the Factory class from the package</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">core.design_patterns.factory</span> <span class="kn">import</span> <span class="n">Factory</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Create some fruit objects and then put them in a mapper alongside with their titles. then create a FruitFactory that inherits from “Factory” we imported earlier.then create an instance of the factory and pass the objects mapper to it.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Apple</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;this is an apple&quot;</span>
+
+<span class="k">class</span> <span class="nc">Orange</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;this is a orange&quot;</span>
+
+<span class="k">class</span> <span class="nc">Banana</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;this is a banana&quot;</span>
+
+<span class="n">objects</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;apple&quot;</span> <span class="p">:</span> <span class="n">Apple</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span> <span class="p">:</span> <span class="n">Orange</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span> <span class="p">:</span> <span class="n">Banana</span><span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">FruitFactory</span><span class="p">(</span><span class="n">Factory</span><span class="p">):</span><span class="k">pass</span>
+
+<span class="n">fruit_factory</span> <span class="o">=</span> <span class="n">FruitFactory</span><span class="p">(</span><span class="n">objects</span><span class="o">=</span><span class="n">objects</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>This <strong>fruit_factory</strong> now can generate fruits that we want using <a class="reference internal" href="#core.design_patterns.factory.Factory.build_object" title="core.design_patterns.factory.Factory.build_object"><code class="xref py py-class docutils literal notranslate"><span class="pre">build_object</span></code></a> method; we just need to ask it by the title. The important point here is that we are not going to directly instantiate fruits; the factory will handle it.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">apple_instance1</span> <span class="o">=</span> <span class="n">fruit_factory</span><span class="o">.</span><span class="n">build_object</span><span class="p">(</span><span class="s2">&quot;apple&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">apple_instance1</span><span class="p">)</span> <span class="c1">#this is an apple</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>There will be cases that the object needs parameters to get instantiated. In this case we pass those parameters to <a class="reference internal" href="#core.design_patterns.factory.Factory.build_object" title="core.design_patterns.factory.Factory.build_object"><code class="xref py py-class docutils literal notranslate"><span class="pre">build_object</span></code></a> method.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Lemon</span> <span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">color</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">color</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;this is a </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="si">}</span><span class="s2"> lemon&quot;</span>
+
+<span class="n">fruit_factory</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="s2">&quot;lemon&quot;</span><span class="p">,</span> <span class="n">Lemon</span><span class="p">)</span>
+<span class="n">lemon_instance</span> <span class="o">=</span> <span class="n">fruit_factory</span><span class="o">.</span><span class="n">build_object</span><span class="p">(</span><span class="s2">&quot;lemon&quot;</span><span class="p">,{</span><span class="s2">&quot;color&quot;</span> <span class="p">:</span> <span class="s2">&quot;green&quot;</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lemon_instance</span><span class="p">)</span> <span class="c1">#this is a green lemon</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>As you see, we can add objects to our factory using <a class="reference internal" href="#core.design_patterns.factory.Factory.add_object" title="core.design_patterns.factory.Factory.add_object"><code class="xref py py-class docutils literal notranslate"><span class="pre">add_object</span></code></a> and <a class="reference internal" href="#core.design_patterns.factory.Factory.add_objects" title="core.design_patterns.factory.Factory.add_objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">add_objects</span></code></a>.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pineapple</span> <span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;this is a pineapple&quot;</span>
+
+<span class="k">class</span> <span class="nc">Coconut</span> <span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;this is a coconut&quot;</span>
+
+<span class="n">fruit_factory</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="s2">&quot;pineapple&quot;</span><span class="p">,</span> <span class="n">Pineapple</span><span class="p">)</span>
+<span class="n">fruit_factory</span><span class="o">.</span><span class="n">add_objects</span><span class="p">({</span><span class="s2">&quot;pineapple&quot;</span><span class="p">:</span> <span class="n">Pineapple</span><span class="p">,</span> <span class="s2">&quot;coconut&quot;</span> <span class="p">:</span> <span class="n">Coconut</span><span class="p">})</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You may have noticed that pineapple was added twice in our example. The behaviour
+for adding duplicate items can be changed with on_duplicate parameter. There are
+two options : <strong>replace</strong> and <strong>skip</strong>. the default is <strong>replace</strong>.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p>We can also delete objects from our factory using <a class="reference internal" href="#core.design_patterns.factory.Factory.delete_object" title="core.design_patterns.factory.Factory.delete_object"><code class="xref py py-class docutils literal notranslate"><span class="pre">delete_object</span></code></a> and <a class="reference internal" href="#core.design_patterns.factory.Factory.delete_objects" title="core.design_patterns.factory.Factory.delete_objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">delete_objects</span></code></a>.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fruit_factory</span><span class="o">.</span><span class="n">delete_object</span><span class="p">(</span><span class="s2">&quot;pineapple&quot;</span><span class="p">)</span>
+<span class="n">fruit_factory</span><span class="o">.</span><span class="n">delete_objects</span><span class="p">([</span><span class="s2">&quot;pineapple&quot;</span><span class="p">,</span><span class="s2">&quot;coconut&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">fruit_factory</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">keys</span><span class="p">()])</span> <span class="c1">#[&#39;apple&#39;, &#39;orange&#39;, &#39;banana&#39;, &#39;lemon&#39;]</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>It is recommended to add similar objects with same interfaces to a factory.
+This way you can write more dynamic codes and benefit from ducktyping when it comes to parameters.</p>
+</div>
+</section>
 <section id="module-core.design_patterns.factory">
 <span id="api-reference"></span><h2>API Reference<a class="headerlink" href="#module-core.design_patterns.factory" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="core.design_patterns.factory.Factory">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">core.design_patterns.factory.</span></span><span class="sig-name descname"><span class="pre">Factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#core.design_patterns.factory.Factory" title="Permalink to this definition"></a></dt>
-<dd><p>The prototype object. This object implements a practical factory method</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">core.design_patterns.factory.</span></span><span class="sig-name descname"><span class="pre">Factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#core.design_patterns.factory.Factory" title="Permalink to this definition"></a></dt>
+<dd><p>The factory object. This object implements a practical factory method</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="core.design_patterns.factory.Factory.add_object">
 <span class="sig-name descname"><span class="pre">add_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_duplicate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'replace'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#core.design_patterns.factory.Factory.add_object" title="Permalink to this definition"></a></dt>
@@ -86,13 +205,13 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="core.design_patterns.factory.Factory.add_objects">
-<span class="sig-name descname"><span class="pre">add_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_duplicate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'replace'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#core.design_patterns.factory.Factory.add_objects" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">add_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_duplicate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'replace'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#core.design_patterns.factory.Factory.add_objects" title="Permalink to this definition"></a></dt>
 <dd><p>Adds multiple objects to objects while considering on_duplicate behaviour</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="core.design_patterns.factory.Factory.build_object">
-<span class="sig-name descname"><span class="pre">build_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#core.design_patterns.factory.Factory.build_object" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">build_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#core.design_patterns.factory.Factory.build_object" title="Permalink to this definition"></a></dt>
 <dd><p>Builds the requested object; If any paramter is required for instantiation
 they must be passed in.</p>
 </dd></dl>
@@ -117,7 +236,9 @@ they must be passed in.</p>
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="prototype.html" class="btn btn-neutral float-left" title="prototype" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
 
   <hr/>
 
