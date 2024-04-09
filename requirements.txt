@@ -29,3 +29,5 @@ pytest-lazy-fixture==0.6.3
 pytest-cov
 pytest-django
 jdatetime
+pyodbc
+yagmail

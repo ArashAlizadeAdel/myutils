@@ -20,3 +20,4 @@ inherit from; enabling your own classes to have that specific capability.
    singleton
    prototype
    factory
+   builder
