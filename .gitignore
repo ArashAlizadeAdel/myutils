@@ -1,0 +1,14 @@
+.venv
+.spyproject
+configs.py
+creds.py
+__pycache__/
+*.csv
+*.pyc
+playground
+.pytest_cache
+.pytest_cache/*
+run_data/*
+!run_data/.gitkeep
+.coverage
+.idea
