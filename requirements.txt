@@ -14,7 +14,7 @@ requests
 SQLAlchemy
 func_timeout
 mysqlclient
-pytest
+pytest==7.4.0
 pytest-lazy-fixture
 pytest-cov
 pytest-django

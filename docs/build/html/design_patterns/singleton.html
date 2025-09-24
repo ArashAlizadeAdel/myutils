@@ -1,28 +1,26 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>singleton &mdash; myutils  documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=a6a68382" />
+      <link rel="stylesheet" type="text/css" href="../_static/fonts.css?v=5583d106" />
+
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="prototype" href="prototype.html" />
-    <link rel="prev" title="Design Patterns" href="index.html" /> 
+    <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -44,21 +42,18 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Design Patterns</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">singleton</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#how-it-works">How it works</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-core.design_patterns.singleton">API Reference</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#core.design_patterns.singleton.Singleton"><code class="docutils literal notranslate"><span class="pre">Singleton</span></code></a></li>
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">singleton</a><ul>
+<li><a class="reference internal" href="#how-it-works">How it works</a></li>
+<li><a class="reference internal" href="#module-core.design_patterns.singleton">API Reference</a><ul>
+<li><a class="reference internal" href="#core.design_patterns.singleton.Singleton"><code class="docutils literal notranslate"><span class="pre">Singleton</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="prototype.html">prototype</a></li>
 </ul>
-</li>
-</ul>
-
+</div>
         </div>
       </div>
     </nav>
@@ -73,7 +68,6 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">Design Patterns</a></li>
       <li class="breadcrumb-item active">singleton</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/design_patterns/singleton.rst.txt" rel="nofollow"> View page source</a>
@@ -85,27 +79,27 @@
            <div itemprop="articleBody">
              
   <section id="singleton">
-<h1>singleton<a class="headerlink" href="#singleton" title="Permalink to this heading"></a></h1>
+<h1>singleton<a class="headerlink" href="#singleton" title="Link to this heading"></a></h1>
 <p>Singleton is a design pattern that enforces an object to have only one instance
 in the lifetime of a run. If you try to create another instance of that object,
 it won’t happen and you get the very first instance you created.</p>
 <p>In practice, we may want to have multiple singleton objects in our program.
 The implementation we provide here, lets us have such functionality.</p>
 <section id="how-it-works">
-<h2>How it works<a class="headerlink" href="#how-it-works" title="Permalink to this heading"></a></h2>
+<h2>How it works<a class="headerlink" href="#how-it-works" title="Link to this heading"></a></h2>
 <ol class="arabic">
 <li><p>Import the Singleton class from the package</p>
 <blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">core.design_patterns.singleton</span> <span class="kn">import</span> <span class="n">Singleton</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">core.design_patterns.singleton</span><span class="w"> </span><span class="kn">import</span> <span class="n">Singleton</span>
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p>Create your own singleton object, with whatever functionality you have in mind</p>
 <blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MySingleton</span><span class="p">(</span><span class="n">Singleton</span><span class="p">):</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MySingleton</span><span class="p">(</span><span class="n">Singleton</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">val</span>
 </pre></div>
 </div>
@@ -133,9 +127,9 @@ instantiation altered this value on the object.</p>
 </li>
 <li><p>Create another singleton object, this newly created object can have singleton feature for its own independently from the first one we created.</p>
 <blockquote>
-<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyAnotherSingleton</span><span class="p">(</span><span class="n">Singleton</span><span class="p">):</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyAnotherSingleton</span><span class="p">(</span><span class="n">Singleton</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">val</span>
 
 <span class="n">third_instance_from_new_object</span> <span class="o">=</span> <span class="n">MyAnotherSingleton</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
@@ -152,10 +146,10 @@ instantiation altered this value on the object.</p>
 </ol>
 </section>
 <section id="module-core.design_patterns.singleton">
-<span id="api-reference"></span><h2>API Reference<a class="headerlink" href="#module-core.design_patterns.singleton" title="Permalink to this heading"></a></h2>
+<span id="api-reference"></span><h2>API Reference<a class="headerlink" href="#module-core.design_patterns.singleton" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="core.design_patterns.singleton.Singleton">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">core.design_patterns.singleton.</span></span><span class="sig-name descname"><span class="pre">Singleton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#core.design_patterns.singleton.Singleton" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">core.design_patterns.singleton.</span></span><span class="sig-name descname"><span class="pre">Singleton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#core.design_patterns.singleton.Singleton" title="Link to this definition"></a></dt>
 <dd><p>The singleton object</p>
 </dd></dl>
 
@@ -165,10 +159,7 @@ instantiation altered this value on the object.</p>
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Design Patterns" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="prototype.html" class="btn btn-neutral float-right" title="prototype" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 
