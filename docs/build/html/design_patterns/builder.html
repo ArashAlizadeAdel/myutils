@@ -20,7 +20,8 @@
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="factory" href="factory.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -42,17 +43,15 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">builder</a><ul>
-<li><a class="reference internal" href="#how-it-works">How it works</a></li>
-<li><a class="reference internal" href="#module-core.design_patterns.builder">API Reference</a><ul>
-<li><a class="reference internal" href="#core.design_patterns.builder.Builder"><code class="docutils literal notranslate"><span class="pre">Builder</span></code></a><ul>
-<li><a class="reference internal" href="#core.design_patterns.builder.Builder.__init__"><code class="docutils literal notranslate"><span class="pre">Builder.__init__()</span></code></a></li>
-<li><a class="reference internal" href="#core.design_patterns.builder.Builder._add_to_instance_decorator"><code class="docutils literal notranslate"><span class="pre">Builder._add_to_instance_decorator()</span></code></a></li>
-<li><a class="reference internal" href="#core.design_patterns.builder.Builder._add_to_step_results_decorator"><code class="docutils literal notranslate"><span class="pre">Builder._add_to_step_results_decorator()</span></code></a></li>
-<li><a class="reference internal" href="#core.design_patterns.builder.Builder.build"><code class="docutils literal notranslate"><span class="pre">Builder.build()</span></code></a></li>
-<li><a class="reference internal" href="#core.design_patterns.builder.Builder.decorate_step"><code class="docutils literal notranslate"><span class="pre">Builder.decorate_step()</span></code></a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Design Patterns</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="singleton.html">singleton</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prototype.html">prototype</a></li>
+<li class="toctree-l2"><a class="reference internal" href="factory.html">factory</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">builder</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#how-it-works">How it works</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-core.design_patterns.builder">API Reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#core.design_patterns.builder.Builder"><code class="docutils literal notranslate"><span class="pre">Builder</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -60,7 +59,7 @@
 </ul>
 </li>
 </ul>
-</div>
+
         </div>
       </div>
     </nav>
@@ -75,6 +74,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Design Patterns</a></li>
       <li class="breadcrumb-item active">builder</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/design_patterns/builder.rst.txt" rel="nofollow"> View page source</a>
@@ -97,6 +97,231 @@ be defined on the builder (with a specific naming convention) and those steps ge
 when you execute <a class="reference internal" href="#core.design_patterns.builder.Builder.build" title="core.design_patterns.builder.Builder.build"><code class="xref py py-class docutils literal notranslate"><span class="pre">build</span></code></a> method.</p>
 <section id="how-it-works">
 <h2>How it works<a class="headerlink" href="#how-it-works" title="Link to this heading"></a></h2>
+<p>Imagine you are running a burger shop, where each burger is made step-by-step,
+following specific recipes. Some customers want a simple burger,
+while others may want some other variations.
+To manage this process efficiently, we use a Burger Builder that constructs burgers
+dynamically, step by step, based on the customer’s order.</p>
+<p>This analogy demonstrates the Builder Design Pattern in action,
+where the process of building an object (in this case, a burger)
+is broken down into sequential steps.
+Each step adds a specific ingredient or attribute to the final product.</p>
+<ol class="arabic">
+<li><p>Import the Builder class from the package</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">core.design_patterns.builder</span><span class="w"> </span><span class="kn">import</span> <span class="n">Builder</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Define the Burger object. This class represents the final product that we are building. It has attributes like name and price, and additional attributes may added dynamically during the building process.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Burger</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">price</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">price</span> <span class="o">=</span> <span class="n">price</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">attributes</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Burger Ready To Deliver : </span><span class="se">\n</span><span class="s2">(</span><span class="si">{</span><span class="n">attributes</span><span class="si">}</span><span class="s2">)&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Define the BurgerBuilder object.This class is like the chef in your burger shop. It knows the recipe and follows a series of steps to create the burger. Steps are executed sequentially to construct the burger. The naming convention (stepX_&lt;name&gt;) ensures that the steps are executed in the correct order.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">BurgerBuilder</span><span class="p">(</span><span class="n">Builder</span><span class="p">)</span> <span class="p">:</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">step01_add_bread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Simple Bread Added.&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">step02_add_patty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Meat Patty Added&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">step03_add_cheese</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;No Cheese Added&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">step04_add_veggies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Base Veggies Added&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">step05_add_suaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Ketchup suace Added&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Now we have the blue print to build burgers. We can inherit from our BurgerBuilder to define different types of burgers.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">SimpleBurgerBuilder</span><span class="p">(</span><span class="n">BurgerBuilder</span><span class="p">):</span><span class="k">pass</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">DoubleCreamyCheeseBurgerBuilder</span><span class="p">(</span><span class="n">BurgerBuilder</span><span class="p">)</span> <span class="p">:</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">step03_add_cheese</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Double Layer of Chedar Cheese Added&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">step05_add_suaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Ketchup suace and Sour Cream Added&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>We are ready to build burgers for our customers! we use our builders in a Dictionary as menu :</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">menu</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;id&quot;</span> <span class="p">:</span> <span class="mi">1</span> <span class="p">,</span><span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;Simple Burger&quot;</span><span class="p">,</span><span class="s2">&quot;price&quot;</span> <span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;builder&quot;</span> <span class="p">:</span> <span class="n">SimpleBurgerBuilder</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;id&quot;</span> <span class="p">:</span> <span class="mi">2</span> <span class="p">,</span><span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;Double Cheese Creamy Burger&quot;</span><span class="p">,</span><span class="s2">&quot;price&quot;</span> <span class="p">:</span> <span class="mi">17</span><span class="p">,</span> <span class="s2">&quot;builder&quot;</span> <span class="p">:</span> <span class="n">DoubleCreamyCheeseBurgerBuilder</span><span class="p">},</span>
+    <span class="p">]</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>A customer view the menu and submit orders :</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">customer_orders</span> <span class="o">=</span> <span class="p">[</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span> <span class="p">:</span> <span class="mi">1</span> <span class="p">,</span> <span class="s2">&quot;count&quot;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+                   <span class="p">{</span><span class="s2">&quot;id&quot;</span> <span class="p">:</span> <span class="mi">2</span> <span class="p">,</span> <span class="s2">&quot;count&quot;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+                  <span class="p">]</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Based on these orders, We have to make 8 burgers. For each order we run its corresponding Builder N times based on “count” value :</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">deliverables</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">order</span> <span class="ow">in</span> <span class="n">customer_orders</span> <span class="p">:</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">order</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">])</span> <span class="p">:</span>
+
+        <span class="n">item</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">menu</span> <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">order</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># select customer&#39;s order from the menu</span>
+        <span class="n">item_materialized</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;builder&quot;</span><span class="p">](</span><span class="n">Burger</span><span class="p">,</span><span class="n">item</span><span class="p">)</span> <span class="c1"># build the selected menu item</span>
+
+        <span class="c1"># finalize the order as a deliverable</span>
+
+        <span class="n">deliverable</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">deliverable</span><span class="p">[</span><span class="s2">&quot;burger_as_string&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">item_materialized</span><span class="o">.</span><span class="n">instance</span><span class="p">)</span>
+        <span class="n">deliverable</span><span class="p">[</span><span class="s2">&quot;burger_as_instance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">item_materialized</span><span class="o">.</span><span class="n">instance</span>
+
+        <span class="n">deliverables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">deliverable</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Burgers are ready. We can utilize them as we wish. For example we may want to calculate the order price :</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">order_price</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="s2">&quot;burger_as_instance&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">price</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">deliverables</span><span class="p">])</span> <span class="c1"># 101 dollars</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Now Imagine the manager wants to measure preparation time of each burger being built. How can we achieve this goal in an efficient way? The answer is that our Builder object accepts decorators. we can define them on the class or outside of it and apply them on every step. here we define a simple decorator that measures the duration of the run.</p>
+<blockquote>
+<div><blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>after defining the decorator, you have to also extend the method <strong>decorate_step</strong> to apply the decorator to the runtime.</p>
+</div>
+</div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">BurgerBuilder</span><span class="p">(</span><span class="n">Builder</span><span class="p">)</span> <span class="p">:</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">step01_add_bread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Simple Bread Added.&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">step02_add_patty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Meat Patty Added&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">step03_add_cheese</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;No Cheese Added&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">step04_add_veggies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Base Veggies Added&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">step05_add_suaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Ketchup suace Added&quot;</span>
+
+    <span class="c1"># the decorator defined on the builder</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_duration_decorator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Evaluate duration to prepare the burger.&#39;&#39;&#39;</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+            <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                <span class="n">start_time</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                <span class="n">end_time</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="n">duration</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;duration&quot;</span><span class="p">)</span> <span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="mi">0</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">duration</span> <span class="o">+=</span> <span class="n">duration</span>
+
+                <span class="k">return</span> <span class="n">result</span>
+            <span class="k">return</span> <span class="n">wrapper</span>
+        <span class="k">return</span> <span class="n">decorator</span>
+
+    <span class="c1"># the decorator applied on each step</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">decorate_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">decorate_step</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_duration_decorator</span><span class="p">()(</span><span class="n">step</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">step</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Then for demonstration purposes we add some sleep to our steps so we can have numbers as the preparation duration.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">DoubleCreamyCheeseBurgerBuilder</span><span class="p">(</span><span class="n">BurgerBuilder</span><span class="p">)</span> <span class="p">:</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">step03_add_cheese</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+        <span class="k">return</span> <span class="s2">&quot;Double Layer of Chedar Cheese Added&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">step05_add_suaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+        <span class="k">return</span> <span class="s2">&quot;Ketchup suace and Sour Cream Added&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>The duration is defined on the builder instance, not the burger instance. so we add it to our delivarables :</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">deliverables</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">order</span> <span class="ow">in</span> <span class="n">customer_orders</span> <span class="p">:</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">order</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">])</span> <span class="p">:</span>
+
+        <span class="n">item</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">menu</span> <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">order</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># select customer&#39;s order from the menu</span>
+        <span class="n">item_materialized</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;builder&quot;</span><span class="p">](</span><span class="n">Burger</span><span class="p">,</span><span class="n">item</span><span class="p">)</span> <span class="c1"># build the selected menu item</span>
+
+        <span class="c1"># finalize the order as a deliverable</span>
+
+        <span class="n">deliverable</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">deliverable</span><span class="p">[</span><span class="s2">&quot;burger_as_string&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">item_materialized</span><span class="o">.</span><span class="n">instance</span><span class="p">)</span>
+        <span class="n">deliverable</span><span class="p">[</span><span class="s2">&quot;burger_as_instance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">item_materialized</span><span class="o">.</span><span class="n">instance</span>
+        <span class="n">deliverable</span><span class="p">[</span><span class="s2">&quot;duration&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">item_materialized</span><span class="o">.</span><span class="n">duration</span> <span class="c1"># duration added</span>
+
+        <span class="n">deliverables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">deliverable</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Now we can easily measure the preparation_time.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">total_duration</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="s2">&quot;duration&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">deliverables</span><span class="p">])</span> <span class="c1"># 16.009735 Seconds</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<dl class="simple">
+<dt>Finally we have to know that result of each step is saved in two places :</dt><dd><ol class="arabic simple">
+<li><p><strong>steps_results</strong> which is an instance variable on Builder instance (in this case BurgerBuilder/its childs).</p></li>
+<li><p>As attributes on the target object being built (in this case the burger)</p></li>
+</ol>
+</dd>
+</dl>
+</div>
 </section>
 <section id="module-core.design_patterns.builder">
 <span id="api-reference"></span><h2>API Reference<a class="headerlink" href="#module-core.design_patterns.builder" title="Link to this heading"></a></h2>
@@ -151,7 +376,9 @@ extend this method.</p>
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="factory.html" class="btn btn-neutral float-left" title="factory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
 
   <hr/>
 

@@ -27,3 +27,5 @@ inputs_test_prototype_advanced_functionality = inputs_for_basic_tests
 inputs_test_factory_basic_functionality = inputs_for_basic_tests
 
 inputs_test_builder_basic_functionality = inputs_for_basic_tests
+
+inputs_test_adapter_basic_functionality = inputs_for_basic_tests

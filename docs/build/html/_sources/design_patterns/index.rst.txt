@@ -7,3 +7,4 @@
    prototype
    factory
    builder
+   adapter
